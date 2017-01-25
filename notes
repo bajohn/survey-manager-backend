@@ -1,0 +1,8 @@
+
+CREATE TABLE IF NOT EXISTS `javatwitter`.`tweets` (
+  `key` int NOT NULL,
+  `tweet` varchar(200) CHARACTER SET utf8 NOT NULL,
+  `date` date NOT NULL DEFAULT '0000-00-00')
+);
+
+ALTER TABLE  `users` ADD  `salt` VARCHAR( 127 ) NOT NULL AFTER  `password` ;
