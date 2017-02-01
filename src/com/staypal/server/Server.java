@@ -24,19 +24,22 @@ public class Server extends NanoHTTPD{
         start();
     }
 
+    public synchronized void waitCall() throws InterruptedException, IOException
+    {
+        wait();
+    }
+
+
+
     public static void main(String[] args)
     {
-        //MAJOR TODO: this needs a proper Daemon setup, otherwise the server will stay cranked up at 100% CPU use.
-
         try {
-            new Server();
-            while(true)
-            {
-                //sleep
-            }
-            //ServerRunner
-        } catch (IOException ioe) {
-            System.out.println("Couldn't start server:\n" + ioe);
+            Server serverLocal = new Server();
+            serverLocal.waitCall();
+
+
+        } catch (IOException|InterruptedException exc) {
+            System.out.println("Couldn't start server:\n" + exc);
         }
 
     }

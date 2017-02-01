@@ -10,9 +10,9 @@ import java.util.Map;
 /**
  * Created by bjohn454 on 1/22/2017.
  */
-public class IndexLoader extends GeneralHandler {
+public class LoginLoader extends GeneralHandler {
     public NanoHTTPD.Response get(RouterNanoHTTPD.UriResource uriResource, Map<String, String> params, NanoHTTPD.IHTTPSession session)
     {
-        return Helpers.loadPage("./pages/index.html");
+        return Helpers.loadPage("./pages/login.html");
     }
 }

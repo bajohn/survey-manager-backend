@@ -19,7 +19,7 @@ public class Helpers {
             String line = "";
             while ((line = html.readLine())!=null)
             {
-                output+=line;
+                output+=line+"\n";
             }
             return NanoHTTPD.newFixedLengthResponse(output);
         }

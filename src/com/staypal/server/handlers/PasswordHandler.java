@@ -1,6 +1,7 @@
 package com.staypal.server.handlers;
 import com.staypal.db.tables.Users;
 import com.staypal.server.DatabaseConnector;
+import com.staypal.server.Helpers;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.router.RouterNanoHTTPD;
 import org.jooq.DSLContext;
@@ -81,25 +82,7 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
     public NanoHTTPD.Response get(RouterNanoHTTPD.UriResource uriResource, Map<String, String> params, NanoHTTPD.IHTTPSession session)
     {
         //return NanoHTTPD.newFixedLengthResponse("hola");
-        try
-        {
-            String output = "";
-            BufferedReader html = new BufferedReader( new FileReader("index.html"));
-            String line = "";
-            while ((line = html.readLine())!=null)
-            {
-                output+=line;
-            }
-            return NanoHTTPD.newFixedLengthResponse(output);
-        }
-        catch(FileNotFoundException e)
-        {
-            return NanoHTTPD.newFixedLengthResponse("Error reading file");
-        }
-        catch(Exception e)
-        {
-            return NanoHTTPD.newFixedLengthResponse("Error reading file");
-        }
+        return Helpers.loadPage("index.html");
 
     }
 
