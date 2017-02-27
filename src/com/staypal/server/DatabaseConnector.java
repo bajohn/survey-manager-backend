@@ -13,9 +13,9 @@ public class DatabaseConnector {
     {
         BasicDataSource data_source = new BasicDataSource();
         data_source.setDriverClassName("com.mysql.jdbc.Driver");
-        data_source.setUrl("jdbc:mysql://localhost:3306/javatwitter?useSSL=false");
-        data_source.setUsername("root");
-        data_source.setPassword("thisguy");
+        data_source.setUrl("jdbc:mysql://localhost:3306/staypaldb?useSSL=false");
+        data_source.setUsername("jooquser");
+        data_source.setPassword("jooquserpassword");
 
         data_source.setMaxTotal(160);
         data_source.setMaxIdle(10);

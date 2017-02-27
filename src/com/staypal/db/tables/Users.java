@@ -31,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = -2082551260;
+    private static final long serialVersionUID = 1350593575;
 
     /**
      * The reference instance of <code>staypaldb.users</code>
@@ -49,47 +49,47 @@ public class Users extends TableImpl<UsersRecord> {
     /**
      * The column <code>staypaldb.users.username</code>.
      */
-    public final TableField<UsersRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+    public final TableField<UsersRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
     /**
      * The column <code>staypaldb.users.password</code>.
      */
-    public final TableField<UsersRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(1023).nullable(false), this, "");
+    public final TableField<UsersRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(1023), this, "");
 
     /**
      * The column <code>staypaldb.users.salt</code>.
      */
-    public final TableField<UsersRecord, String> SALT = createField("salt", org.jooq.impl.SQLDataType.VARCHAR.length(127).nullable(false), this, "");
+    public final TableField<UsersRecord, String> SALT = createField("salt", org.jooq.impl.SQLDataType.VARCHAR.length(127), this, "");
 
     /**
      * The column <code>staypaldb.users.birthday</code>.
      */
-    public final TableField<UsersRecord, Date> BIRTHDAY = createField("birthday", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
+    public final TableField<UsersRecord, Date> BIRTHDAY = createField("birthday", org.jooq.impl.SQLDataType.DATE, this, "");
 
     /**
      * The column <code>staypaldb.users.email</code>.
      */
-    public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+    public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
     /**
      * The column <code>staypaldb.users.hometown</code>.
      */
-    public final TableField<UsersRecord, String> HOMETOWN = createField("hometown", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+    public final TableField<UsersRecord, String> HOMETOWN = createField("hometown", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
     /**
      * The column <code>staypaldb.users.host_city</code>.
      */
-    public final TableField<UsersRecord, String> HOST_CITY = createField("host_city", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+    public final TableField<UsersRecord, String> HOST_CITY = createField("host_city", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
     /**
      * The column <code>staypaldb.users.low_rate</code>.
      */
-    public final TableField<UsersRecord, Double> LOW_RATE = createField("low_rate", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+    public final TableField<UsersRecord, Double> LOW_RATE = createField("low_rate", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * The column <code>staypaldb.users.max_pay</code>.
      */
-    public final TableField<UsersRecord, Double> MAX_PAY = createField("max_pay", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+    public final TableField<UsersRecord, Double> MAX_PAY = createField("max_pay", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * The column <code>staypaldb.users.season</code>.
