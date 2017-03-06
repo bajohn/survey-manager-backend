@@ -4,6 +4,7 @@
 package com.staypal.db;
 
 
+import com.staypal.db.tables.AuthTokens;
 import com.staypal.db.tables.Users;
 
 import javax.annotation.Generated;
@@ -21,6 +22,11 @@ import javax.annotation.Generated;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>staypaldb.auth_tokens</code>.
+     */
+    public static final AuthTokens AUTH_TOKENS = com.staypal.db.tables.AuthTokens.AUTH_TOKENS;
 
     /**
      * The table <code>staypaldb.users</code>.

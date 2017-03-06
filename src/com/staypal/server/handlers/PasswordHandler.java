@@ -1,5 +1,8 @@
 package com.staypal.server.handlers;
+import com.staypal.db.Staypaldb;
+import com.staypal.db.tables.AuthTokens;
 import com.staypal.db.tables.Users;
+import com.staypal.db.tables.records.UsersRecord;
 import com.staypal.server.DatabaseConnector;
 import com.staypal.server.Helpers;
 import fi.iki.elonen.NanoHTTPD;
@@ -18,6 +21,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,16 +31,69 @@ import java.util.Map;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import static com.staypal.server.Helpers.parseParams;
+
 /**
  * Created by bjohn454 on 1/16/2017.
  */
 public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
 {
 
-    public boolean authenticate(String userName, String passwordIn) throws Exception
+    public JSONObject authenticate(String emailIn, String passwordIn) throws Exception
     {
-        //Staypaldb.STAYPALDB.USERS.SALT
-        return false;
+        HashMap<String, String> resp = new HashMap<>();
+        DSLContext db = DatabaseConnector.startConnect();
+        Result res = db.selectFrom(Staypaldb.STAYPALDB.USERS).where(Staypaldb.STAYPALDB.USERS.EMAIL.equal(emailIn)).fetch();
+
+        if(res.isEmpty())
+        {
+            resp.put("success", "false");
+            resp.put("message", "User not found" + emailIn);
+        }
+        else  if(res.size()>1)
+        {
+            resp.put("success", "false");
+            resp.put("message", "Multiple accounts found for " + emailIn);
+        }
+        else
+        {
+            UsersRecord rec = (UsersRecord) res.get(0);
+            if(Arrays.equals(Base64.getDecoder().decode(rec.getPassword()),
+                    getEncryptedPassword(passwordIn, Base64.getDecoder().decode(rec.getSalt()))))
+            {
+                SecureRandom randomNumber = new SecureRandom();
+
+                byte[] accessToken = new byte[64]; //will be base64 encoded later
+                byte[] refreshToken = new byte[64];
+
+                randomNumber.nextBytes(accessToken); //generate access token
+                randomNumber.nextBytes(refreshToken); //generate refresh token
+
+                String accessTokenEncoded = Base64.getEncoder().encodeToString(accessToken);
+                String refreshTokenEncoded = Base64.getEncoder().encodeToString(refreshToken);
+
+                db.insertInto(AuthTokens.AUTH_TOKENS).
+                        set(AuthTokens.AUTH_TOKENS.EMAIL, emailIn).
+                        set(AuthTokens.AUTH_TOKENS.ACCESS_TOKEN, accessTokenEncoded).
+                        set(AuthTokens.AUTH_TOKENS.REFRESH_TOKEN, refreshTokenEncoded).
+                        set(AuthTokens.AUTH_TOKENS.TIME_ISSUED, Timestamp.valueOf(LocalDateTime.now())).execute();
+
+                resp.put("success", "true");
+                resp.put("password", "correct");
+                resp.put("a_tkn", accessTokenEncoded );
+                resp.put("r_tkn", refreshTokenEncoded );
+
+            }
+            else
+            {
+                resp.put("success", "true");
+                resp.put("password", "incorrect");
+            }
+
+        }
+
+
+        return new JSONObject(resp);
 
     }
 
@@ -55,7 +114,7 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
 
     public JSONObject createUser(String email, String passwordIn) throws Exception
     {
-        SecureRandom randomNumber = SecureRandom.getInstance("SHA1PRNG"); //secure random number based on system attributes / sha1
+        SecureRandom randomNumber = new SecureRandom();  //default secure random number; was .getInstance("SHA1PRNG");
         DSLContext db = DatabaseConnector.startConnect();
         Result res = db.selectFrom(Users.USERS).where(Users.USERS.EMAIL.equal(email)).fetch();
 
@@ -129,15 +188,24 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
 
     public NanoHTTPD.Response post(RouterNanoHTTPD.UriResource uriResource, Map<String, String> params, NanoHTTPD.IHTTPSession session)
     {
-        Map<String, String> files = new HashMap<String, String>();
-        try {
-            session.parseBody(files);
-            session.getQueryParameterString();
-            //parse session.getParms().toString());
-            HashMap<String, String> parsed = (HashMap<String, String> ) session.getParms();
 
-            createUser((String) parsed.get("email"),(String) parsed.get("password") );
-            return NanoHTTPD.newFixedLengthResponse( (String) parsed.get("email") + (String) parsed.get("password") );
+        try
+        {
+
+            HashMap<String, String> parsedParams = parseParams(session);
+            String action = parsedParams.get("action");
+            if(action.equals("create"))
+            {
+                return NanoHTTPD.newFixedLengthResponse(createUser(parsedParams.get("email"), parsedParams.get("password") ).toString());
+            }
+            else if(action.equals("auth"))
+            {
+                return NanoHTTPD.newFixedLengthResponse(authenticate(parsedParams.get("email"), parsedParams.get("password") ).toString());
+            }
+            else
+            {
+                return  NanoHTTPD.newFixedLengthResponse("Error: unrecognized action in password_handler: " + action);
+            }
         }
 
         catch (Exception e) {

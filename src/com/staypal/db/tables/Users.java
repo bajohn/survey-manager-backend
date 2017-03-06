@@ -4,10 +4,13 @@
 package com.staypal.db.tables;
 
 
+import com.staypal.db.Keys;
 import com.staypal.db.Staypaldb;
 import com.staypal.db.tables.records.UsersRecord;
 
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.Generated;
 
@@ -15,6 +18,7 @@ import org.jooq.Field;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
 
 
@@ -31,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = 1350593575;
+    private static final long serialVersionUID = -820300518;
 
     /**
      * The reference instance of <code>staypaldb.users</code>
@@ -69,7 +73,7 @@ public class Users extends TableImpl<UsersRecord> {
     /**
      * The column <code>staypaldb.users.email</code>.
      */
-    public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+    public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>staypaldb.users.hometown</code>.
@@ -134,6 +138,22 @@ public class Users extends TableImpl<UsersRecord> {
     @Override
     public Schema getSchema() {
         return Staypaldb.STAYPALDB;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UniqueKey<UsersRecord> getPrimaryKey() {
+        return Keys.KEY_USERS_PRIMARY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<UniqueKey<UsersRecord>> getKeys() {
+        return Arrays.<UniqueKey<UsersRecord>>asList(Keys.KEY_USERS_PRIMARY);
     }
 
     /**

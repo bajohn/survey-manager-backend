@@ -42,7 +42,7 @@ public class Router extends RouterNanoHTTPD{
         //custom js
         addRoute("/js/mover.js", ResourceLoader.class);
         addRoute("/js/index.js", ResourceLoader.class);
-
+        addRoute("/js/login.js", ResourceLoader.class);
 
 
 

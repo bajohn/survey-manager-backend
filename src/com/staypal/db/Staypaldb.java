@@ -4,6 +4,7 @@
 package com.staypal.db;
 
 
+import com.staypal.db.tables.AuthTokens;
 import com.staypal.db.tables.Users;
 
 import java.util.ArrayList;
@@ -30,12 +31,17 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Staypaldb extends SchemaImpl {
 
-    private static final long serialVersionUID = 1113122394;
+    private static final long serialVersionUID = 1614216165;
 
     /**
      * The reference instance of <code>staypaldb</code>
      */
     public static final Staypaldb STAYPALDB = new Staypaldb();
+
+    /**
+     * The table <code>staypaldb.auth_tokens</code>.
+     */
+    public final AuthTokens AUTH_TOKENS = com.staypal.db.tables.AuthTokens.AUTH_TOKENS;
 
     /**
      * The table <code>staypaldb.users</code>.
@@ -67,6 +73,7 @@ public class Staypaldb extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
+            AuthTokens.AUTH_TOKENS,
             Users.USERS);
     }
 }

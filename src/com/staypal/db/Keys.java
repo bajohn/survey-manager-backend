@@ -4,7 +4,13 @@
 package com.staypal.db;
 
 
+import com.staypal.db.tables.Users;
+import com.staypal.db.tables.records.UsersRecord;
+
 import javax.annotation.Generated;
+
+import org.jooq.UniqueKey;
+import org.jooq.impl.AbstractKeys;
 
 
 /**
@@ -30,6 +36,7 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = UniqueKeys0.KEY_USERS_PRIMARY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -39,4 +46,8 @@ public class Keys {
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
+
+    private static class UniqueKeys0 extends AbstractKeys {
+        public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = createUniqueKey(Users.USERS, "KEY_users_PRIMARY", Users.USERS.EMAIL);
+    }
 }
