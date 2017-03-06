@@ -1,0 +1,1 @@
+scp ~/Documents/StayPal/out/artifacts/StayPal_jar/StayPal.jar root@138.197.92.98:/var/www/backend/
