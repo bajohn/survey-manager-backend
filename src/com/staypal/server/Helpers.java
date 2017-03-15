@@ -1,11 +1,16 @@
 package com.staypal.server;
 
+import com.staypal.db.Staypaldb;
 import fi.iki.elonen.NanoHTTPD;
+import org.jooq.DSLContext;
+import org.jooq.Result;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +29,7 @@ public class Helpers {
             {
                 output+=line+"\n";
             }
+
             return NanoHTTPD.newFixedLengthResponse(output);
         }
         catch(FileNotFoundException e)
@@ -44,5 +50,41 @@ public class Helpers {
         //parse session.getParms().toString());
         HashMap<String, String> parsedParams = (HashMap<String, String> ) sessionIn.getParms();
         return parsedParams;
+    }
+
+    public static boolean isAuthed( NanoHTTPD.IHTTPSession sessionIn) throws Exception
+    {
+        HashMap<String, String> parsedParams = parseParams(sessionIn);
+        if(parsedParams.containsKey("email") && parsedParams.containsKey("a_tkn"))
+        {
+            long maxTime = new Date().getTime() - 1000 * 3600; //one hour
+            Timestamp stamp = new Timestamp(maxTime);
+
+            DSLContext db = DatabaseConnector.startConnect();
+            Result res = db.selectFrom(Staypaldb.STAYPALDB.AUTH_TOKENS).
+                    where(Staypaldb.STAYPALDB.AUTH_TOKENS.ACCESS_TOKEN.equal(parsedParams.get("a_tkn")).
+                            and(Staypaldb.STAYPALDB.AUTH_TOKENS.EMAIL.equal(parsedParams.get("email")))
+                            .and(Staypaldb.STAYPALDB.AUTH_TOKENS.TIME_ISSUED.greaterOrEqual(stamp))
+                    ).fetch();
+            db.close();
+
+            if(res.size() > 0)
+            {
+                //user is authenticated
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
+        else
+        {
+            return false;
+        }
+
+
     }
 }

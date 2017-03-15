@@ -77,7 +77,7 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
                         set(AuthTokens.AUTH_TOKENS.ACCESS_TOKEN, accessTokenEncoded).
                         set(AuthTokens.AUTH_TOKENS.REFRESH_TOKEN, refreshTokenEncoded).
                         set(AuthTokens.AUTH_TOKENS.TIME_ISSUED, Timestamp.valueOf(LocalDateTime.now())).execute();
-
+                db.close();
                 resp.put("success", "true");
                 resp.put("password", "correct");
                 resp.put("a_tkn", accessTokenEncoded );
@@ -129,10 +129,13 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
                     set(Users.USERS.SALT, Base64.getEncoder().encodeToString(salt)).
                     set(Users.USERS.PASSWORD,  Base64.getEncoder().encodeToString(getEncryptedPassword(passwordIn, salt))).
                     execute();
-
+            db.close();
             HashMap<String, String> resp = new HashMap<>();
+            authenticate(email,passwordIn);
             resp.put("success", "true");
-            resp.put("message", "User created: " + email + ", " +  Base64.getEncoder().encodeToString(getEncryptedPassword(passwordIn, salt)));
+            resp.put("message", "User created.");
+            resp.put("email", email);
+            resp.put("a_tkn", authenticate(email,passwordIn).get("a_tkn").toString());// + email + ", " +  Base64.getEncoder().encodeToString(getEncryptedPassword(passwordIn, salt)));
             return new JSONObject(resp);
         }
         else

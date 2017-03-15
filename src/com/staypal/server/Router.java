@@ -1,10 +1,7 @@
 package com.staypal.server;
 
 import com.staypal.server.handlers.PasswordHandler;
-import com.staypal.server.pageloaders.IndexBodyLoader;
-import com.staypal.server.pageloaders.IndexLoader;
-import com.staypal.server.pageloaders.LoginLoader;
-import com.staypal.server.pageloaders.ResourceLoader;
+import com.staypal.server.pageloaders.*;
 import fi.iki.elonen.router.RouterNanoHTTPD;
 
 import java.io.IOException;
@@ -27,11 +24,16 @@ public class Router extends RouterNanoHTTPD{
         //html pages that require some backend processing
         addRoute("/", IndexLoader.class);
         addRoute("/login", LoginLoader.class);
-        addRoute("/index-body", IndexBodyLoader.class);
+        addRoute("/join", JoinLoader.class);
         addRoute("/password_handler", PasswordHandler.class);
+        addRoute("/header", HeaderLoader.class);
+        addRoute("/homepage", HomeLoader.class);
+        addRoute("/find", FindLoader.class);
+        addRoute("/profile", ProfileLoader.class);
 
-        //html pages loaded raw
+        //html pages loaded raw. This is unsafe / should only be used for temporary pages.
         addRoute("/pages/coming-soon.html", ResourceLoader.class);
+        //addRoute("/pages/login-header.html", ResourceLoader.class);
 
         //javascript libraries
         addRoute("/js/bootstrap.min.js", ResourceLoader.class);
@@ -41,7 +43,7 @@ public class Router extends RouterNanoHTTPD{
 
         //custom js
         addRoute("/js/mover.js", ResourceLoader.class);
-        addRoute("/js/index.js", ResourceLoader.class);
+        addRoute("/js/join.js", ResourceLoader.class);
         addRoute("/js/login.js", ResourceLoader.class);
 
 

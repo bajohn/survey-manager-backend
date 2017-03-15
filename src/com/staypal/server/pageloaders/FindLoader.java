@@ -10,25 +10,27 @@ import java.util.Map;
 import static com.staypal.server.Helpers.isAuthed;
 
 /**
- * Created by bjohn454 on 1/22/2017.
+ * Created by bjohn454 on 3/14/2017.
  */
-public class LoginLoader extends GeneralHandler {
+
+public class FindLoader extends GeneralHandler {
     public NanoHTTPD.Response get(RouterNanoHTTPD.UriResource uriResource, Map<String, String> params, NanoHTTPD.IHTTPSession session)
     {
-        try
-        {
+
+        try {
+
             if(isAuthed(session))
             {
-                return Helpers.loadPage("./pages/homepage.html");
+                return Helpers.loadPage("./pages/find.html");
             }
             else
             {
                 return Helpers.loadPage("./pages/login.html");
             }
-        }
-        catch (Exception e  )
+        } catch (Exception e  )
         {
             return(NanoHTTPD.newFixedLengthResponse(e.getMessage()));
         }
+
     }
 }
