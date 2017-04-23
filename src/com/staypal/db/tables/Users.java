@@ -8,7 +8,6 @@ import com.staypal.db.Keys;
 import com.staypal.db.Staypaldb;
 import com.staypal.db.tables.records.UsersRecord;
 
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = -820300518;
+    private static final long serialVersionUID = 403151869;
 
     /**
      * The reference instance of <code>staypaldb.users</code>
@@ -51,11 +50,6 @@ public class Users extends TableImpl<UsersRecord> {
     }
 
     /**
-     * The column <code>staypaldb.users.username</code>.
-     */
-    public final TableField<UsersRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
-
-    /**
      * The column <code>staypaldb.users.password</code>.
      */
     public final TableField<UsersRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(1023), this, "");
@@ -66,49 +60,94 @@ public class Users extends TableImpl<UsersRecord> {
     public final TableField<UsersRecord, String> SALT = createField("salt", org.jooq.impl.SQLDataType.VARCHAR.length(127), this, "");
 
     /**
-     * The column <code>staypaldb.users.birthday</code>.
-     */
-    public final TableField<UsersRecord, Date> BIRTHDAY = createField("birthday", org.jooq.impl.SQLDataType.DATE, this, "");
-
-    /**
      * The column <code>staypaldb.users.email</code>.
      */
     public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
-     * The column <code>staypaldb.users.hometown</code>.
+     * The column <code>staypaldb.users.phone</code>.
      */
-    public final TableField<UsersRecord, String> HOMETOWN = createField("hometown", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+    public final TableField<UsersRecord, String> PHONE = createField("phone", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
     /**
-     * The column <code>staypaldb.users.host_city</code>.
+     * The column <code>staypaldb.users.neighborhood</code>.
      */
-    public final TableField<UsersRecord, String> HOST_CITY = createField("host_city", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+    public final TableField<UsersRecord, String> NEIGHBORHOOD = createField("neighborhood", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
 
     /**
-     * The column <code>staypaldb.users.low_rate</code>.
+     * The column <code>staypaldb.users.how_hear</code>.
      */
-    public final TableField<UsersRecord, Double> LOW_RATE = createField("low_rate", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+    public final TableField<UsersRecord, String> HOW_HEAR = createField("how_hear", org.jooq.impl.SQLDataType.VARCHAR.length(1023), this, "");
 
     /**
-     * The column <code>staypaldb.users.max_pay</code>.
+     * The column <code>staypaldb.users.other_comments</code>.
      */
-    public final TableField<UsersRecord, Double> MAX_PAY = createField("max_pay", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+    public final TableField<UsersRecord, String> OTHER_COMMENTS = createField("other_comments", org.jooq.impl.SQLDataType.VARCHAR.length(1023), this, "");
 
     /**
-     * The column <code>staypaldb.users.season</code>.
+     * The column <code>staypaldb.users.need_rides</code>.
      */
-    public final TableField<UsersRecord, String> SEASON = createField("season", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+    public final TableField<UsersRecord, Byte> NEED_RIDES = createField("need_rides", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
-     * The column <code>staypaldb.users.experience_type</code>.
+     * The column <code>staypaldb.users.need_food</code>.
      */
-    public final TableField<UsersRecord, String> EXPERIENCE_TYPE = createField("experience_type", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+    public final TableField<UsersRecord, Byte> NEED_FOOD = createField("need_food", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
-     * The column <code>staypaldb.users.description</code>.
+     * The column <code>staypaldb.users.need_childcare</code>.
      */
-    public final TableField<UsersRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(1023), this, "");
+    public final TableField<UsersRecord, Byte> NEED_CHILDCARE = createField("need_childcare", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.need_housing</code>.
+     */
+    public final TableField<UsersRecord, Byte> NEED_HOUSING = createField("need_housing", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.need_translation</code>.
+     */
+    public final TableField<UsersRecord, Byte> NEED_TRANSLATION = createField("need_translation", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.need_court</code>.
+     */
+    public final TableField<UsersRecord, Byte> NEED_COURT = createField("need_court", org.jooq.impl.SQLDataType.TINYINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.name</code>.
+     */
+    public final TableField<UsersRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+
+    /**
+     * The column <code>staypaldb.users.nw</code>.
+     */
+    public final TableField<UsersRecord, Byte> NW = createField("nw", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.ne</code>.
+     */
+    public final TableField<UsersRecord, Byte> NE = createField("ne", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.sw</code>.
+     */
+    public final TableField<UsersRecord, Byte> SW = createField("sw", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.se</code>.
+     */
+    public final TableField<UsersRecord, Byte> SE = createField("se", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.va</code>.
+     */
+    public final TableField<UsersRecord, Byte> VA = createField("va", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
+
+    /**
+     * The column <code>staypaldb.users.md</code>.
+     */
+    public final TableField<UsersRecord, Byte> MD = createField("md", org.jooq.impl.SQLDataType.TINYINT.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.TINYINT)), this, "");
 
     /**
      * Create a <code>staypaldb.users</code> table reference

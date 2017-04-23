@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.jar.Pack200;
 
 /**
  * Created by bjohn454 on 1/22/2017.
@@ -51,7 +52,25 @@ public class Helpers {
         HashMap<String, String> parsedParams = (HashMap<String, String> ) sessionIn.getParms();
         return parsedParams;
     }
+    public static boolean isAdmin( NanoHTTPD.IHTTPSession sessionIn) throws Exception {
+        HashMap<String, String> parsedParams = parseParams(sessionIn);
+        if (parsedParams.containsKey("email"))
+        {
+            if(parsedParams.get("email").equals("admin") && isAuthed(sessionIn))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
+        }
+        else
+        {
+            return false;
+        }
+    }
     public static boolean isAuthed( NanoHTTPD.IHTTPSession sessionIn) throws Exception
     {
         HashMap<String, String> parsedParams = parseParams(sessionIn);
@@ -86,5 +105,24 @@ public class Helpers {
         }
 
 
+    }
+
+    public static String getLanguage( NanoHTTPD.IHTTPSession sessionIn)  throws Exception
+    {
+        HashMap<String, String> parsedParams = parseParams(sessionIn);
+        return parsedParams.get("language");
+    }
+
+    public static NanoHTTPD.Response loadPageLangauge(NanoHTTPD.IHTTPSession sessionIn, String urlIn) throws Exception
+    {
+        String language = getLanguage(sessionIn);
+        if(language.equals("arabic") || language.equals("spanish")  || language.equals("french") )
+        {
+            return loadPage("./pages-" + language + "/" + urlIn + "-" + language +".html");
+        }
+        else
+        {
+            return loadPage("./pages/" + urlIn + ".html");
+        }
     }
 }

@@ -20,11 +20,11 @@ public class HeaderLoader extends GeneralHandler {
 
             if(isAuthed(session))
             {
-                return Helpers.loadPage("./pages/homepage-header.html");
+                return Helpers.loadPageLangauge(session, "homepage-header");
             }
             else
             {
-                return Helpers.loadPage("./pages/login-header.html");
+                return Helpers.loadPageLangauge(session, "login-header");
             }
         } catch (Exception e  )
         {

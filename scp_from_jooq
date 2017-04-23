@@ -1,1 +1,1 @@
-scp -r root@138.197.92.98:~/stayPal/jooq/src/*  ~/Documents/StayPal/src/
+scp -r root@104.236.12.196:~/stayPal/jooq/src/*  ~/Documents/JMC/src/

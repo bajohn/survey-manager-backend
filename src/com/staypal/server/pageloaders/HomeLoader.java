@@ -21,11 +21,11 @@ public class HomeLoader extends GeneralHandler {
 
             if(isAuthed(session))
             {
-                return Helpers.loadPage("./pages/homepage.html");
+                return Helpers.loadPageLangauge(session, "homepage");
             }
             else
             {
-                return Helpers.loadPage("./pages/login.html");
+                return Helpers.loadPageLangauge(session, "login" );
             }
         } catch (Exception e  )
         {

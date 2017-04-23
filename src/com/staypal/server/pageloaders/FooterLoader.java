@@ -10,24 +10,16 @@ import java.util.Map;
 import static com.staypal.server.Helpers.isAuthed;
 
 /**
- * Created by bjohn454 on 3/14/2017.
+ * Created by bjohn454 on 4/1/2017.
  */
 
-public class ProfileLoader extends GeneralHandler {
+public class FooterLoader extends GeneralHandler {
     public NanoHTTPD.Response get(RouterNanoHTTPD.UriResource uriResource, Map<String, String> params, NanoHTTPD.IHTTPSession session)
     {
 
-        try {
-
-            if(isAuthed(session))
-            {
-                return Helpers.loadPageLangauge(session, "profile");
-            }
-            else
-            {
-                return Helpers.loadPageLangauge(session, "login");
-            }
-
+        try
+        {
+            return Helpers.loadPage("./pages/footer.html");
         } catch (Exception e  )
         {
             return(NanoHTTPD.newFixedLengthResponse(e.getMessage()));

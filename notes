@@ -6,3 +6,37 @@ CREATE TABLE IF NOT EXISTS `javatwitter`.`tweets` (
 );
 
 ALTER TABLE  `users` ADD  `salt` VARCHAR( 127 ) NOT NULL AFTER  `password` ;
+
+
+
+
+ns1.us71.siteground.us
+ns2.us71.siteground.us
+
+This means email:
+عنوان البريد الإلكتروني, الإيمايل:
+
+
+
+words/phrases to translate: 
+"Enter your login information below."
+"Arabic"
+"Email"
+"Password (8 or more characters)"
+"Confirm Password"
+"Register"
+"Login"
+"Join"
+"Home"
+"Welcome to JMC. Go to "Profile" above to fill out the survey."
+"Admin"
+"Logout"
+
+"We are organizing volunteer groups to provide for specific needs. With which of these groups would you like to be connected? [Note: As many of our groups are not yet running, we might simply connect you with an existing resource for the time being to fill certain needs.]"
+
+"Rides"
+"Food and Clothing"
+"Childcare"
+"Housing"
+"Translation"
+"Court Accompaniment"

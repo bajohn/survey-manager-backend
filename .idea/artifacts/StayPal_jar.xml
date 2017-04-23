@@ -2,7 +2,7 @@
   <artifact type="jar" build-on-make="true" name="StayPal:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/StayPal_jar</output-path>
     <root id="archive" name="StayPal.jar">
-      <element id="module-output" name="StayPal" />
+      <element id="module-output" name="JMC" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/nanohttpd.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jooq-3.8.2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jooq-meta-3.8.2.jar" path-in-jar="/" />

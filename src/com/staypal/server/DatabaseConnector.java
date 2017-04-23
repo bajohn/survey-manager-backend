@@ -10,34 +10,35 @@ import org.jooq.impl.DSL;
  */
 public class  DatabaseConnector {
 
-    static BasicDataSource stored_data_source = null;
+    public static BasicDataSource stored_data_source = new BasicDataSource();;
+
+
+    static {
+        stored_data_source.setDriverClassName("com.mysql.jdbc.Driver");
+        stored_data_source.setUrl("jdbc:mysql://localhost:3306/staypaldb?useSSL=false");
+        stored_data_source.setUsername("jooquser");
+        stored_data_source.setPassword("jooquserpassword");
+
+        stored_data_source.setMaxTotal(5000); //todo: make sure these don't get crazy high
+        stored_data_source.setMaxIdle(10);
+        stored_data_source.setMinIdle(5);
+        stored_data_source.setInitialSize(5);
+        stored_data_source.setMinEvictableIdleTimeMillis(10000);
+        stored_data_source.setTimeBetweenEvictionRunsMillis(10000);
+        stored_data_source.setMaxWaitMillis(10000);
+        stored_data_source.setValidationQuery("SELECT 1");
+        stored_data_source.setTestOnBorrow(true);
+        stored_data_source.setTestOnReturn(true);
+        stored_data_source.setTestWhileIdle(true);
+
+
+    }
     public static DSLContext startConnect() throws Exception
     {
 
 
-        if(stored_data_source==null)
-        {
-            BasicDataSource data_source = new BasicDataSource();
-            data_source.setDriverClassName("com.mysql.jdbc.Driver");
-            data_source.setUrl("jdbc:mysql://localhost:3306/staypaldb?useSSL=false");
-            data_source.setUsername("jooquser");
-            data_source.setPassword("jooquserpassword");
-
-            data_source.setMaxTotal(160);
-            data_source.setMaxIdle(10);
-            data_source.setMinIdle(5);
-            data_source.setInitialSize(5);
-            data_source.setMinEvictableIdleTimeMillis(1800000);
-            data_source.setTimeBetweenEvictionRunsMillis(1800000);
-            data_source.setMaxWaitMillis(10000);
-            data_source.setValidationQuery("SELECT 1");
-            data_source.setTestOnBorrow(true);
-            data_source.setTestOnReturn(true);
-            data_source.setTestWhileIdle(true);
-
-            stored_data_source = data_source;
-        }
         Connection conn = stored_data_source.getConnection();
+
         return DSL.using(conn);//, settings);
     }
 }

@@ -31,11 +31,11 @@ public class JoinLoader extends GeneralHandler {
 
             if(isAuthed(session))
             {
-                return Helpers.loadPage("./pages/homepage.html");
+                return Helpers.loadPageLangauge(session, "homepage");
             }
             else
             {
-                return Helpers.loadPage("./pages/join.html");
+                return Helpers.loadPageLangauge(session, "join");
             }
         } catch (Exception e  )
         {

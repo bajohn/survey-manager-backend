@@ -47,11 +47,13 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
 
         if(res.isEmpty())
         {
+
             resp.put("success", "false");
             resp.put("message", "User not found" + emailIn);
         }
         else  if(res.size()>1)
         {
+
             resp.put("success", "false");
             resp.put("message", "Multiple accounts found for " + emailIn);
         }
@@ -77,7 +79,7 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
                         set(AuthTokens.AUTH_TOKENS.ACCESS_TOKEN, accessTokenEncoded).
                         set(AuthTokens.AUTH_TOKENS.REFRESH_TOKEN, refreshTokenEncoded).
                         set(AuthTokens.AUTH_TOKENS.TIME_ISSUED, Timestamp.valueOf(LocalDateTime.now())).execute();
-                db.close();
+
                 resp.put("success", "true");
                 resp.put("password", "correct");
                 resp.put("a_tkn", accessTokenEncoded );
@@ -92,7 +94,7 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
 
         }
 
-
+        db.close();
         return new JSONObject(resp);
 
     }
@@ -144,6 +146,7 @@ public class PasswordHandler extends RouterNanoHTTPD.GeneralHandler
             HashMap<String, String> resp = new HashMap<>();
             resp.put("success", "false");
             resp.put("message", "User already exists");
+            db.close();
             return new JSONObject(resp);
         }
 
